@@ -78,7 +78,13 @@ export class BearerCredential extends Credential {
         if (this.options.in === "header" && this.options.name !== undefined) {
             headerName = this.options.name;
         }
-        result.headers.set(headerName, "Bearer " + this.token);
+
+        if (this.options.in === "cookie" && this.options.name !== undefined) {
+            result.headers.set("cookie", this.options.name + "=" + this.token)
+        } else {
+            result.headers.set(headerName, "Bearer " + this.token);
+        }
+
         return result;
     }
 }
